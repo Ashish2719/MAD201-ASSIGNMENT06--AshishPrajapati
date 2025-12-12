@@ -1,24 +1,39 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+/*
+ * Course: MAD201-01
+ * Assignment: 6
+* Name: Ashish Prajapati
+ * Student ID: A00194842
+ * Description: Root Stack setup wrapping the app in NewsProvider.
+ */
+
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import React from 'react';
+import { NewsProvider } from './context/NewsContext';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+    <NewsProvider>
+      <Stack screenOptions={{ 
+        headerStyle: { backgroundColor: '#c0392b' },
+        headerTintColor: '#fff',
+      }}>
+        {/* Splash Screen */}
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        
+        {/* Tabs Navigator */}
+        <Stack.Screen 
+            name="screens/NewsTabs" 
+            options={{ headerShown: false }} 
+        />
+        
+        {/* Detail Screen */}
+        <Stack.Screen 
+          name="DetailScreen" 
+          options={{ title: 'Article Details' }} 
+        />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </NewsProvider>
   );
 }
